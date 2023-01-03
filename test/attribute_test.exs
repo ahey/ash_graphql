@@ -29,4 +29,32 @@ defmodule AshGraphql.AttributeTest do
 
     assert data["__type"]
   end
+
+  test "atom attribute with one_of constraints uses enum for inputs" do
+    {:ok, %{data: data}} =
+      """
+      query {
+        __type(name: "CreatePostInput") {
+          inputFields {
+            name
+            type {
+              kind
+              name
+              ofType {
+                kind
+                name
+              }
+            }
+          }
+        }
+      }
+      """
+      |> Absinthe.run(AshGraphql.Test.Schema)
+
+    visibility_field =
+      data["__type"]["inputFields"]
+      |> Enum.find(fn field -> field["name"] == "visibility" end)
+
+    assert visibility_field["type"]["kind"] == "ENUM"
+  end
 end
