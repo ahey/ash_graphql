@@ -18,7 +18,7 @@ defmodule AshGraphql.AttributeTest do
     {:ok, %{data: data}} =
       """
       query {
-        __type(name: "Visibility") {
+        __type(name: "PostVisibility") {
           enumValues {
             name
           }
