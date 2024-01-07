@@ -282,8 +282,12 @@ defmodule AshGraphql.Api do
         module: schema,
         __reference__: AshGraphql.Resource.ref(env),
         name: "fields",
-        type: %Absinthe.Blueprint.TypeReference.List{
-          of_type: :string
+        type: %Absinthe.Blueprint.TypeReference.NonNull{
+          of_type: %Absinthe.Blueprint.TypeReference.List{
+            of_type: %Absinthe.Blueprint.TypeReference.NonNull{
+              of_type: :string
+            }
+          }
         }
       }
     ]
